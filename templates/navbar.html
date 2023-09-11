@@ -1,0 +1,24 @@
+<div>
+  <div class="todoapp">
+    <a href="/">
+      <h1>TO DO</h1>
+    </a>
+  </div>
+
+  <div class="login-logout">
+    {%if request.user.is_authenticated%}
+
+    <h3>Hello, {{request.user}}</h3>
+    <a href="{%url 'logout' %}">Logout</a>
+    {%endif%}
+  </div>
+
+  {%if request.user.is_authenticated%}
+  <div>
+    <form action="{%url 'home' %}" method="GET">
+      <input type="text" name="q" placeholder="Search Task......" />
+    </form>
+
+    {%endif%}
+  </div>
+</div>

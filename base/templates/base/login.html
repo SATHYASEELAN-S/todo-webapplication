@@ -1,0 +1,114 @@
+{%extends 'main.html' %} 
+{%block content%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login and Registration Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 98%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+            margin-left: 10px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .message {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        {% if post == 'login' %} {% for message in messages %}
+        <div class="message">{{ message }}</div>
+        {% endfor %}
+        <form action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            <label>Username:</label>
+            <input type="text" name="username" placeholder="Username" required /><br />
+            <label>Password:</label>
+            <input type="password" name="password" placeholder="Password" required /><br />
+            <input type="submit" value="Login" /><br />
+            <label>Haven't signed up yet?</label><br />
+            <a href="{% url 'register' %}">Register</a>
+        </form>
+        {% else %} {% for message in messages %}
+        <div class="message">{{ message }}</div>
+        {% endfor %}
+        <form action="{% url 'register' %}" method="post">
+            {% csrf_token %}
+            <label>Username:</label>
+            <input type="text" name="username" placeholder="Enter username" required /><br />
+            <label>Email:</label>
+            <input type="email" name="email" placeholder="Enter email" required /><br />
+            <label>First Name:</label>
+            <input type="text" name="first_name" placeholder="Enter first name" required /><br />
+            <label>Last Name:</label>
+            <input type="text" name="last_name" placeholder="Enter last name" required /><br />
+            <label>Password:</label>
+            <input type="password" name="password" placeholder="Enter password" required /><br />
+            <label>Confirm Password:</label>
+            <input type="password" name="password1" placeholder="Confirm password" required /><br />
+            <input type="submit" value="Signup" /><br />
+            <label>Already signed up?</label><br />
+            <a href="{% url 'login' %}">Login</a>
+        </form>
+        {% endif %}
+    </div>
+</body>
+
+</html>
+
+{%endblock%}

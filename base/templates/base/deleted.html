@@ -1,0 +1,73 @@
+<a href="/">
+    <h1>TO DO</h1>
+  </a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Deletion</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 200px auto ;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            
+        }
+
+        h4 {
+            margin-top: 10px;
+            color: #333;
+        }
+
+        form {
+            margin-top: 10px;
+        }
+
+        input[type="submit"] {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        a {
+            text-decoration: none;
+            color: #007BFF;
+            margin-left: 10px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div>
+            <h4>Are you sure you want to delete "{{ form.taskfield }}"?</h4>
+            <form action="" method="post">
+                {% csrf_token %}
+                <a href="{{ request.META.HTTP_REFERER }}">Go back</a>
+                <input type="submit" value="Confirm">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,130 @@
+{%extends 'main.html'%} {%block content%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task Manager</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+
+    h3 {
+      color: #333;
+    }
+
+    form {
+      margin-top: 10px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    input[type="submit"] {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 10px;
+    }
+
+    a {
+      text-decoration: none;
+      color: #007bff;
+      margin-left: 10px;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div>
+      <form action="" method="post">
+        {% csrf_token %} {{ form }}
+        <input type="submit" value="Add" />
+      </form>
+    </div>
+    <div>
+      <div>
+        <div>
+          <small>{{tt.taskfield}}</small>
+        </div>
+
+        <h3>Active tasks</h3>
+        <ul>
+          <form action="{% url 'home' %}" method="POST">
+            {% csrf_token %}
+            <ol>
+              {% for t in tasks %} 
+              {%if t.completed != True %}
+                  {%if t.host == request.user %}
+              <li>
+                {{ t.taskfield }} <a href="{% url 'updated' t.id %}">Edit</a><a href="{% url 'deleted' t.id %}">Delete</a>
+              </li>
+                  {%endif%}
+              {%endif%} {% endfor %}
+            </ol>
+          </form>
+        </ul>
+
+        <h3>Completed tasks</h3>
+        <ul>
+          <form action="{% url 'home' %}" method="POST">
+            {% csrf_token %}
+            <ol>
+              {% for t in tasks %}
+               {%if t.completed %}
+               {%if t.host == request.user %}
+              <li>
+                {{ t.taskfield }} <a href="{% url 'updated' t.id %}">Edit</a><a href="{% url 'deleted' t.id %}">Delete</a>
+              </li>
+              {%endif%}
+              {%endif%} {% endfor %}
+            </ol>
+          </form>
+        </ul>
+
+      </div>
+
+    </div>
+  </div>
+</body>
+
+</html>
+{%endblock%}
